@@ -2,6 +2,8 @@ import Image from "next/image";
 import thread from "@/assets/IG-Thread.webp";
 import { Button } from "./ui/button";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import Blog from "./Blog";
+import CategoryList from "./CategoryList";
 
 const Blogs = () => {
   return (
@@ -34,29 +36,7 @@ const Blogs = () => {
           </Button>
         </div>
       </div>
-      <div className="mt-8">
-        <p className="text-2xl font-semibold">Popular Categories</p>
-        <div className="flex flex-row mt-8 justify-between">
-          <Button className="flex items-center ustify-center w-32 bg-blue-300/50 text-black hover:bg-blue-400/50">
-            Style
-          </Button>
-          <Button className="flex items-center ustify-center w-32 bg-violet-300/50 text-black hover:bg-violet-400/50">
-            Fashion
-          </Button>
-          <Button className="flex items-center ustify-center w-32 bg-blue-300/50 text-black hover:bg-blue-400/50">
-            Food
-          </Button>
-          <Button className="flex items-center ustify-center w-32 bg-violet-300/50 text-black hover:bg-violet-400/50">
-            Travel
-          </Button>
-          <Button className="flex items-center ustify-center w-32 bg-blue-300/50 text-black hover:bg-blue-400/50">
-            Culture
-          </Button>
-          <Button className="flex items-center ustify-center w-32 bg-violet-300/50 text-black hover:bg-violet-400/50">
-            Tech
-          </Button>
-        </div>
-      </div>
+      <CategoryList/>
       <div className="mt-10">
         <div className="grid grid-cols-3">
           <div className="col-span-2">
@@ -79,10 +59,97 @@ const Blogs = () => {
                 <p className="font-semibold underline mt-4">Read More</p>
               </div>
             </div>
+            <p className="text-2xl font-semibold">Recent Posts</p>
+            <div className="grid grid-cols-2 gap-10 mt-10">
+              <div>
+                <Image src={thread} alt="thread" width={400} height={400} />
+              </div>
+              <div className="flex flex-col justify-center">
+                <p>
+                  04.10.24 - <span className="text-rose-600">CULTURE</span>
+                </p>
+                <p className="font-semibold mt-4">
+                  Threads now has 275M monthly active users
+                </p>
+                <p className="mt-6">
+                  Meta’s social network, Threads, now has 275 million monthly
+                  active users (MAUs), the company said on Sunday.
+                </p>
+                <p className="font-semibold underline mt-4">Read More</p>
+              </div>
+            </div>
+            <p className="text-2xl font-semibold">Recent Posts</p>
+            <div className="grid grid-cols-2 gap-10 mt-10">
+              <div>
+                <Image src={thread} alt="thread" width={400} height={400} />
+              </div>
+              <div className="flex flex-col justify-center">
+                <p>
+                  04.10.24 - <span className="text-rose-600">CULTURE</span>
+                </p>
+                <p className="font-semibold mt-4">
+                  Threads now has 275M monthly active users
+                </p>
+                <p className="mt-6">
+                  Meta’s social network, Threads, now has 275 million monthly
+                  active users (MAUs), the company said on Sunday.
+                </p>
+                <p className="font-semibold underline mt-4">Read More</p>
+              </div>
+            </div>
+            <p className="text-2xl font-semibold">Recent Posts</p>
+            <div className="grid grid-cols-2 gap-10 mt-10">
+              <div>
+                <Image src={thread} alt="thread" width={400} height={400} />
+              </div>
+              <div className="flex flex-col justify-center">
+                <p>
+                  04.10.24 - <span className="text-rose-600">CULTURE</span>
+                </p>
+                <p className="font-semibold mt-4">
+                  Threads now has 275M monthly active users
+                </p>
+                <p className="mt-6">
+                  Meta’s social network, Threads, now has 275 million monthly
+                  active users (MAUs), the company said on Sunday.
+                </p>
+                <p className="font-semibold underline mt-4">Read More</p>
+              </div>
+            </div>
+            <div className="flex justify-between mt-10">
+              <Button className="bg-rose-600/90">Previous</Button>
+              <Button className="bg-rose-600/90">Next</Button>
+            </div>
           </div>
           <div className="flex flex-col ml-20">
             <p>What&#39;s</p>
             <p className="font-bold mt-1">Most Popular</p>
+            <Blog />
+            <p className="mt-14">Discover by topics</p>
+            <p className="text-2xl font-bold">Categories</p>
+            <div className="grid grid-cols-3 mt-8 gap-4 ">
+              <Button className="flex items-center justify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
+                Style
+              </Button>
+              <Button className="flex items-center justify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
+                Fashion
+              </Button>
+              <Button className="flex items-center justify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
+                Food
+              </Button>
+              <Button className="flex items-center justify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
+                Travel
+              </Button>
+              <Button className="flex items-center justify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
+                Culture
+              </Button>
+              <Button className="flex items-center justify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
+                Tech
+              </Button>
+            </div>
+            <p className="mt-14">Choosen by the editor</p>
+            <p className="text-2xl font-bold">Editors Pick</p>
+            <Blog/>
           </div>
         </div>
       </div>
