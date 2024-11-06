@@ -11,7 +11,6 @@ const SignInForm = () => {
     e.preventDefault();
 
     const response = await axios.post("http://localhost:3000/api/authors/sign-in", {
-      method : "POSt",
       data : {
         email,
         password
