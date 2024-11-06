@@ -2,6 +2,8 @@ import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import thread from "@/assets/IG-Thread.webp";
 import Blog from "@/components/Blog";
+import { Button } from "@/components/ui/button";
+import Comments from "@/components/Comments";
 
 const Page = () => {
   return (
@@ -14,8 +16,8 @@ const Page = () => {
               Threads now has 275M monthly active users
             </p>
             <div>
-              <p>Uday Pandey</p>
-              <p>4 October 2024</p>
+              <p className="text-lg font-semibold">Uday Pandey</p>
+              <p className="text-xs font-medium">4 October 2024</p>
             </div>
           </div>
           <div>
@@ -24,7 +26,7 @@ const Page = () => {
               alt="thread"
               width={500}
               height={500}
-              className="rounded-lg"
+              className="rounded-xl"
             />
           </div>
         </div>
@@ -45,11 +47,40 @@ const Page = () => {
               August, meaning it has gained 75 million active users in just 3
               months.
             </p>
+            <div className="mt-10">
+              <Comments/>
+            </div>
           </div>
           <div>
             <Blog />
+            <p className="mt-14">Discover by topics</p>
+            <p className="text-2xl font-bold">Categories</p>
+            <div className="grid grid-cols-3 mt-8 gap-4 ">
+              <Button className="flex items-center justify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
+                Style
+              </Button>
+              <Button className="flex items-center justify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
+                Fashion
+              </Button>
+              <Button className="flex items-center justify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
+                Food
+              </Button>
+              <Button className="flex items-center justify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
+                Travel
+              </Button>
+              <Button className="flex items-center justify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
+                Culture
+              </Button>
+              <Button className="flex items-center justify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
+                Tech
+              </Button>
+            </div>
+            <p className="mt-14">Choosen by the editor</p>
+            <p className="text-2xl font-bold">Editors Pick</p>
+            <Blog/>
           </div>
         </div>
+
       </div>
     </div>
   );
