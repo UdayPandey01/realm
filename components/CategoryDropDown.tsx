@@ -14,8 +14,8 @@ const CategoryDropdown = ({category, setCategory} : CategoryDropdownProps) => {
     "Travel",
   ];
 
-  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategory(event.target.value);
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategory(e.target.value);
   };
 
   return (

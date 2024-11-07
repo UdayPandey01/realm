@@ -57,7 +57,7 @@ app.post("/sign-up", async (c) => {
         name,
       },
     });
-
+    
     const token = jwt.sign({userId : author.id}, process.env.JWT_SECRET || "sbhsygaiasiubjh")
 
 

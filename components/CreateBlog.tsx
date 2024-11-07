@@ -8,23 +8,30 @@ import CategoryDropdown from "./CategoryDropDown";
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState("")
+  const [category, setCategory] = useState("");
 
-  const handlePublish = async(e) => {
-    e.preventdefault()
+  const handlePublish = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
 
-    
+    const token = localStorage.getItem("authToken");
 
-    const response = await axios.post("http://localhost:3000/api/blogs/publish-blog",{
-      data : {
-        title,
+    console.log("Token", token);
+    const response = await axios.post(
+      "http://localhost:3000/api/blogs/publish-blog",
+      {
+        data : {title,
         content,
-        category,
+        category,}
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
       }
-    })
+    );
 
-    console.log(response.data)
-  }
+    console.log(response.data);
+  };
 
   return (
     <div className="flex flex-col">
@@ -34,18 +41,21 @@ const CreateBlog = () => {
         placeholder="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        className="border p-4 text-4xl font-medium"
       />
       <textarea
         name="content"
         placeholder="Enter your story"
         value={content}
+        className="border p-4 mt-5 font-medium"
         onChange={(e) => setContent(e.target.value)}
       />
-      <CategoryDropdown category={category} setCategory={setCategory}/>
-      <Button onClick={handlePublish}>
+      <div className="mt-5">
+        <CategoryDropdown category={category} setCategory={setCategory} />
+      </div>
+      <Button onClick={handlePublish} className="w-16 mt-8 ml-2">
         Publish
       </Button>
-      
     </div>
   );
 };

@@ -34,7 +34,9 @@ const Navbar = () => {
         Realm
       </div>
       <div className="flex flex-row gap-4 font-medium">
-        <p>Homepage</p>
+        <Link href="/new-story">
+          <p>Write</p>
+        </Link>
         <p>Contact</p>
         <p>About</p>
         <Link href="/login/sign-up">

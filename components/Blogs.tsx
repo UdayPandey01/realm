@@ -4,8 +4,12 @@ import { Button } from "./ui/button";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import Blog from "./Blog";
 import CategoryList from "./CategoryList";
+import prisma from "@/lib/db";
+import {format} from "date-fns"
 
-const Blogs = () => {
+const Blogs = async () => {
+  const blogs = await prisma.blog.findMany();
+
   return (
     <div className="flex flex-col mx-auto max-w-5xl">
       <div className="text-6xl font-semibold mt-10">
@@ -14,7 +18,8 @@ const Blogs = () => {
         </span>{" "}
         Discover my stories and creative ideas
       </div>
-      <div className="grid grid-cols-2 mt-10">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 mt-10 gap-10">
         <div>
           <Image src={thread} alt="thread" width={400} height={400} />
         </div>
@@ -31,103 +36,41 @@ const Blogs = () => {
             said Adam Mosseri, the Meta executive who heads Threads and
             Instagram.
           </p>
-          <Button className="flex items-center ustify-center w-32 bg-violet-300/50 text-black hover:bg-violet-400/50">
+          <Button className="flex items-center justify-center w-32 bg-violet-300/50 text-black hover:bg-violet-400/50">
             Read more <IoIosArrowRoundForward className="ml-2" />
           </Button>
         </div>
       </div>
-      <CategoryList/>
+
+      <CategoryList />
+
       <div className="mt-10">
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="col-span-2">
             <p className="text-2xl font-semibold">Recent Posts</p>
-            <div className="grid grid-cols-2 gap-10 mt-10">
-              <div>
-                <Image src={thread} alt="thread" width={400} height={400} />
-              </div>
-              <div className="flex flex-col justify-center">
-                <p>
-                  04.10.24 - <span className="text-rose-600">CULTURE</span>
-                </p>
-                <p className="font-semibold mt-4">
-                  Threads now has 275M monthly active users
-                </p>
-                <p className="mt-6">
-                  Meta’s social network, Threads, now has 275 million monthly
-                  active users (MAUs), the company said on Sunday.
-                </p>
-                <p className="font-semibold underline mt-4">Read More</p>
-              </div>
-            </div>
-            <p className="text-2xl font-semibold">Recent Posts</p>
-            <div className="grid grid-cols-2 gap-10 mt-10">
-              <div>
-                <Image src={thread} alt="thread" width={400} height={400} />
-              </div>
-              <div className="flex flex-col justify-center">
-                <p>
-                  04.10.24 - <span className="text-rose-600">CULTURE</span>
-                </p>
-                <p className="font-semibold mt-4">
-                  Threads now has 275M monthly active users
-                </p>
-                <p className="mt-6">
-                  Meta’s social network, Threads, now has 275 million monthly
-                  active users (MAUs), the company said on Sunday.
-                </p>
-                <p className="font-semibold underline mt-4">Read More</p>
-              </div>
-            </div>
-            <p className="text-2xl font-semibold">Recent Posts</p>
-            <div className="grid grid-cols-2 gap-10 mt-10">
-              <div>
-                <Image src={thread} alt="thread" width={400} height={400} />
-              </div>
-              <div className="flex flex-col justify-center">
-                <p>
-                  04.10.24 - <span className="text-rose-600">CULTURE</span>
-                </p>
-                <p className="font-semibold mt-4">
-                  Threads now has 275M monthly active users
-                </p>
-                <p className="mt-6">
-                  Meta’s social network, Threads, now has 275 million monthly
-                  active users (MAUs), the company said on Sunday.
-                </p>
-                <p className="font-semibold underline mt-4">Read More</p>
-              </div>
-            </div>
-            <p className="text-2xl font-semibold">Recent Posts</p>
-            <div className="grid grid-cols-2 gap-10 mt-10">
-              <div>
-                <Image src={thread} alt="thread" width={400} height={400} />
-              </div>
-              <div className="flex flex-col justify-center">
-                <p>
-                  04.10.24 - <span className="text-rose-600">CULTURE</span>
-                </p>
-                <p className="font-semibold mt-4">
-                  Threads now has 275M monthly active users
-                </p>
-                <p className="mt-6">
-                  Meta’s social network, Threads, now has 275 million monthly
-                  active users (MAUs), the company said on Sunday.
-                </p>
-                <p className="font-semibold underline mt-4">Read More</p>
-              </div>
-            </div>
-            <div className="flex justify-between mt-10">
-              <Button className="bg-rose-600/90">Previous</Button>
-              <Button className="bg-rose-600/90">Next</Button>
+            <div className="flex flex-col gap-10 mt-10">
+              {blogs.map((blog) => (
+                <div key={blog.id} className="flex flex-row justify-start gap-4">
+                  <Image src={thread} alt="thread" width={300} height={300} />
+                  <div className="flex flex-col">
+                  <p>
+                  {format(new Date(blog.createdAt), "dd MMMM, yyyy")} - <span className="text-rose-600">{blog.category}</span>
+                  </p>
+                  <p className="font-semibold mt-4">{blog.title}</p>
+                  <p className="mt-6">{blog.content.slice(0, 100)}...</p>
+                  <p className="font-semibold underline mt-4">Read More</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-          <div className="flex flex-col ml-20">
+          <div className="flex flex-col">
             <p>What&#39;s</p>
             <p className="font-bold mt-1">Most Popular</p>
             <Blog />
             <p className="mt-14">Discover by topics</p>
             <p className="text-2xl font-bold">Categories</p>
-            <div className="grid grid-cols-3 mt-8 gap-4 ">
+            <div className="grid grid-cols-2 sm:grid-cols-3 mt-8 gap-4">
               <Button className="flex items-center justify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
                 Style
               </Button>
@@ -147,9 +90,9 @@ const Blogs = () => {
                 Tech
               </Button>
             </div>
-            <p className="mt-14">Choosen by the editor</p>
-            <p className="text-2xl font-bold">Editors Pick</p>
-            <Blog/>
+            <p className="mt-14">Chosen by the editor</p>
+            <p className="text-2xl font-bold">Editor&#39;s Pick</p>
+            <Blog />
           </div>
         </div>
       </div>
