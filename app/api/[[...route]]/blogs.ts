@@ -2,7 +2,7 @@ import prisma from "@/lib/db"
 import {Hono} from "hono"
 
 const app = new Hono()
-    .post("/", 
+    .post("/publish-blog", 
         async(c) => {
             const body = await c.req.json()
             console.log(body)

@@ -19,10 +19,20 @@ const SignUpForm = () => {
             password
           }
         })
+
+        if (response.status === 200) {
+          localStorage.setItem('authToken', response.data.token);
+    
+          console.log("Sign-up successful!");
+        } else {
+          console.log(response.data.error || response.data.message);
+        }
         
         setName('')
         setEmail('')
         setPassword('')
+
+
         console.log(response.data)
     }catch(error){
         console.error(error)
@@ -32,7 +42,7 @@ const SignUpForm = () => {
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="bg-white p-6 shadow-lg rounded-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4 text-center">Sign In</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="name" className="block mb-2 font-medium">
@@ -85,7 +95,7 @@ const SignUpForm = () => {
         </form>
         <div className="text-center mt-4">
           <p className="text-sm text-gray-500">
-            Don&#39;t have an account? <a href="#" className="text-blue-500 hover:underline">Sign up</a>
+            Already have an account? <a href="/login/sign-in" className="text-blue-500 hover:underline">Sign in</a>
           </p>
         </div>
       </div>
