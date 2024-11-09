@@ -55,18 +55,18 @@ const Blogs = async () => {
                   key={blog.id}
                   className="flex flex-row justify-start gap-4"
                 >
-                    <Image src={thread} alt="thread" width={300} height={300} />
-                    <div className="flex flex-col">
-                      <p>
-                        {format(new Date(blog.createdAt), "dd MMMM, yyyy")} -{" "}
-                        <span className="text-rose-600">{blog.category}</span>
-                      </p>
-                      <p className="font-semibold mt-4">{blog.title}</p>
-                      <p className="mt-6">{blog.content.slice(0, 100)}...</p>
-                  <Link href={`/blog/${blog.id}`}>
+                  <Image src={thread} alt="thread" width={300} height={300} />
+                  <div className="flex flex-col">
+                    <p>
+                      {format(new Date(blog.createdAt), "dd MMMM, yyyy")} -{" "}
+                      <span className="text-rose-600">{blog.category}</span>
+                    </p>
+                    <p className="font-semibold mt-4">{blog.title}</p>
+                    <p className="mt-6">{blog.content.slice(0, 100)}...</p>
+                    <Link href={`/blog/${blog.id}`}>
                       <p className="font-semibold underline mt-4">Read More</p>
-                  </Link>
-                    </div>
+                    </Link>
+                  </div>
                 </div>
               ))}
             </div>
@@ -78,24 +78,36 @@ const Blogs = async () => {
             <p className="mt-14">Discover by topics</p>
             <p className="text-2xl font-bold">Categories</p>
             <div className="grid grid-cols-2 sm:grid-cols-3 mt-8 gap-4">
-              <Button className="flex items-center justify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
-                Style
-              </Button>
-              <Button className="flex items-center justify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
-                Fashion
-              </Button>
-              <Button className="flex items-center justify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
-                Food
-              </Button>
-              <Button className="flex items-center justify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
-                Travel
-              </Button>
-              <Button className="flex items-center justify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
-                Culture
-              </Button>
-              <Button className="flex items-center justify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
-                Tech
-              </Button>
+              <Link href="/category/style">
+                <Button className="flex items-center ustify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
+                  Style
+                </Button>
+              </Link>
+              <Link href="/category/tech">
+                <Button className="flex items-center ustify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
+                  Tech
+                </Button>
+              </Link>
+              <Link href="/category/fashion">
+                <Button className="flex items-center ustify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
+                  Fashion
+                </Button>
+              </Link>
+              <Link href="/category/culture">
+                <Button className="flex items-center ustify-center w20 bg-blue-300/50 text-black hover:bg-blue-400/50">
+                  Culture
+                </Button>
+              </Link>
+              <Link href="/category/travel">
+                <Button className="flex items-center ustify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
+                  Travel
+                </Button>
+              </Link>
+              <Link href="/category/food">
+                <Button className="flex items-center ustify-center w- bg-blue-300/50 text-black hover:bg-blue-400/50">
+                  Food
+                </Button>
+              </Link>
             </div>
             <p className="mt-14">Chosen by the editor</p>
             <p className="text-2xl font-bold">Editor&#39;s Pick</p>

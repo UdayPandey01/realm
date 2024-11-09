@@ -36,6 +36,7 @@ const app = new Hono()
         category,
       } = body.data;
 
+      const Category = category.toLowerCase()
       const blog = await prisma.blog.create({
         data: {
           title,
@@ -43,7 +44,7 @@ const app = new Hono()
           likes,
           published,
           authorId,
-          category,
+          category : Category,
         },
       });
 
@@ -121,8 +122,22 @@ const app = new Hono()
     }
   })
 
-
-
-  
-
+  .get("/three-blogs", 
+    async(c) => {
+      try {
+        // Fetch the first three blogs along with the author data
+        const blogs = await prisma.blog.findMany({
+          take: 3,
+          include: {
+            author: true, // Assuming you have an 'author' relation set up in Prisma
+          },
+        });
+        
+        return c.json({ blogs });
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+        return c.json({ message: "Error fetching blogs" }, 500); // Handle error with a proper message
+      }
+    }
+  )
 export default app;
