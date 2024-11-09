@@ -1,4 +1,6 @@
 const Blog = () => {
+  
+
   return (
     <div>
       <p className="bg-rose-600/70 w-20 text-center p-1 rounded-xl text-white mt-4">Category</p>

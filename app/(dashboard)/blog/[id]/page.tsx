@@ -16,7 +16,7 @@ interface BlogData {
     title : string,
     content : string
     createdAt : Date
-  }[]
+  }
 }
 
 const Page = ({ params }: { params: Promise<{ id: string }> }) => {

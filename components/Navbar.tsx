@@ -3,6 +3,7 @@ import facebook from "@/assets/facebook.png";
 import twitter from "@/assets/twitter.png";
 import Image from "next/image";
 import Link from "next/link";
+import logo from "@/assets/logo2.png";
 
 const Navbar = () => {
   return (
@@ -30,8 +31,16 @@ const Navbar = () => {
           className="rounded-md"
         />
       </div>
-      <div className="flex flex-row text-2xl font-serif font-bold ml-3">
-        Realm
+      <div className="flex flex-row items-cente ml-3">
+        <Link href="/">
+          <Image
+            src={logo}
+            alt="logo"
+            width={120}
+            height={120}
+            className="rounded-md mt-1"
+          />
+        </Link>
       </div>
       <div className="flex flex-row gap-4 font-medium">
         <Link href="/new-story">
