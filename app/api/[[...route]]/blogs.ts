@@ -95,6 +95,34 @@ const app = new Hono()
     }
   })
 
+  .get("/cat-blog/:cat", async (c) => {
+    console.log("first")
+    const  category  = c.req.param("cat");
+    try {
+      const blog = await prisma.blog.findMany({
+        where: {
+          category : category
+        },
+      });
+
+      if (!blog) {
+        return c.json({ error: "Blog not found" }, 404);
+      }
+
+      return c.json({ blog }, 200);
+    } catch (error) {
+      console.error(error);
+      return c.json(
+        {
+          error: "failed to fetch blog",
+        },
+        500
+      );
+    }
+  })
+
+
+
   
 
 export default app;
