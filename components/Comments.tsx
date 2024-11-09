@@ -1,34 +1,64 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 
 interface Comment {
   id: number;
-  author: string;
+  author: {name : string};
   date: string;
   content: string;
 }
 
-const Comments = () => {
+const Comments = ({ blogId }: { blogId: string }) => {
+  const [comment, setComment] = useState<string>("");
+  const [comments, setComments] = useState<Comment[]>([]);
 
-  const [comment, setComment] = useState<string>("")
-  const [comments, setComments] = useState<Comment[]>([])
-
-  const handleChange = (e) => {
-    setComment(e.target.value)
-  }
-
-  const handleSubmit = () => {
-    if(comment.trim()){
-      const newComment = {
-        id : comments.length + 1,
-        author : "Uday Pandey",
-        date : new Date().toLocaleDateString(),
-        content : comment
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await fetch(`/api/comments/comments/${blogId}`);
+        const data = await response.json();
+        setComments(data.comments);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
       }
-      setComments([newComment, ...comments])
-      setComment("")
+    };
+
+    fetchComments();
+  }, [blogId]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setComment(e.target.value);
+  };
+
+  const handleSubmit = async () => {
+    if (comment.trim()) {
+      try {
+        const token = localStorage.getItem("authToken")
+
+        const response = await fetch(`/api/comments/create-comment/${blogId}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ content: comment }),
+        });
+
+        const data = await response.json();
+        const newComment = {
+          id: data.comment.id,
+          author:{name :  "Uday Pandey"},
+          date: new Date().toLocaleDateString(),
+          content: comment,
+        };
+
+        setComments([newComment, ...comments]);
+        setComment("");
+      } catch (error) {
+        console.error("Error adding comment:", error);
+      }
     }
-  }
+  };
 
   return (
     <div className="flex flex-col">
@@ -41,7 +71,10 @@ const Comments = () => {
           value={comment}
           onChange={handleChange}
         />
-        <Button className="bg-rose-600/70 hover:bg-rose-600/90 rounded-xl" onClick={handleSubmit}>
+        <Button
+          className="bg-rose-600/70 hover:bg-rose-600/90 rounded-xl"
+          onClick={handleSubmit}
+        >
           Send
         </Button>
       </div>
@@ -49,12 +82,10 @@ const Comments = () => {
         {comments.map((comment) => (
           <div key={comment.id} className="mt-6">
             <div className="text-lg font-medium">
-              <p>{comment.author}</p>
+              <p>{comment.author.name}</p>
               <p className="text-sm font-light">{comment.date}</p>
             </div>
-            <div className="mt-1">
-              {comment.content}
-            </div>
+            <div className="mt-1">{comment.content}</div>
           </div>
         ))}
       </div>

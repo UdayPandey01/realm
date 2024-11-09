@@ -4,13 +4,18 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import axios from "axios";
 import CategoryDropdown from "./CategoryDropDown";
+import { useRouter } from "next/navigation";
 
 const CreateBlog = () => {
+  const router = useRouter();
+  
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
-
+  
   const handlePublish = async (e: React.MouseEvent<HTMLButtonElement>) => {
+
+
     e.preventDefault();
 
     const token = localStorage.getItem("authToken");
@@ -19,7 +24,7 @@ const CreateBlog = () => {
     const response = await axios.post(
       "http://localhost:3000/api/blogs/publish-blog",
       {
-        data : {title,
+        data :{title,
         content,
         category,}
       },
@@ -29,6 +34,10 @@ const CreateBlog = () => {
         },
       }
     );
+
+    if(response.status == 200){
+      router.push("/")
+    }
 
     console.log(response.data);
   };

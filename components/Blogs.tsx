@@ -5,7 +5,8 @@ import { IoIosArrowRoundForward } from "react-icons/io";
 import Blog from "./Blog";
 import CategoryList from "./CategoryList";
 import prisma from "@/lib/db";
-import {format} from "date-fns"
+import { format } from "date-fns";
+import Link from "next/link";
 
 const Blogs = async () => {
   const blogs = await prisma.blog.findMany();
@@ -50,16 +51,22 @@ const Blogs = async () => {
             <p className="text-2xl font-semibold">Recent Posts</p>
             <div className="flex flex-col gap-10 mt-10">
               {blogs.map((blog) => (
-                <div key={blog.id} className="flex flex-row justify-start gap-4">
-                  <Image src={thread} alt="thread" width={300} height={300} />
-                  <div className="flex flex-col">
-                  <p>
-                  {format(new Date(blog.createdAt), "dd MMMM, yyyy")} - <span className="text-rose-600">{blog.category}</span>
-                  </p>
-                  <p className="font-semibold mt-4">{blog.title}</p>
-                  <p className="mt-6">{blog.content.slice(0, 100)}...</p>
-                  <p className="font-semibold underline mt-4">Read More</p>
-                  </div>
+                <div
+                  key={blog.id}
+                  className="flex flex-row justify-start gap-4"
+                >
+                    <Image src={thread} alt="thread" width={300} height={300} />
+                    <div className="flex flex-col">
+                      <p>
+                        {format(new Date(blog.createdAt), "dd MMMM, yyyy")} -{" "}
+                        <span className="text-rose-600">{blog.category}</span>
+                      </p>
+                      <p className="font-semibold mt-4">{blog.title}</p>
+                      <p className="mt-6">{blog.content.slice(0, 100)}...</p>
+                  <Link href={`/blog/${blog.id}`}>
+                      <p className="font-semibold underline mt-4">Read More</p>
+                  </Link>
+                    </div>
                 </div>
               ))}
             </div>

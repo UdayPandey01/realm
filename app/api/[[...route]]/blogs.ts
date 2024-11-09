@@ -73,7 +73,7 @@ const app = new Hono()
   .get("/get-blog/:id", async (c) => {
     const  BlogId  = c.req.param("id");
     try {
-      const blog = await prisma.blog.findMany({
+      const blog = await prisma.blog.findUnique({
         where: {
           id: BlogId,
         },
@@ -88,11 +88,13 @@ const app = new Hono()
       console.error(error);
       return c.json(
         {
-          error: "failed to fetch crop",
+          error: "failed to fetch blog",
         },
         500
       );
     }
-  });
+  })
+
+  
 
 export default app;
