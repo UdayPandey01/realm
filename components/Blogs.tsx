@@ -1,15 +1,52 @@
+"use client"
+
 import Image from "next/image";
 import thread from "@/assets/IG-Thread.webp";
 import { Button } from "./ui/button";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import Blog from "./Blog";
 import CategoryList from "./CategoryList";
-import prisma from "@/lib/db";
 import { format } from "date-fns";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
-const Blogs = async () => {
-  const blogs = await prisma.blog.findMany();
+
+type BlogType = {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  category: string;
+};
+
+type BlogApiResponse = {
+  blogs: BlogType[];
+  totalPages: number;
+};
+
+const Blogs: React.FC = () => {
+  const [blogs, setBlogs] = useState<BlogType[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const limit = 5; 
+
+  useEffect(() => {
+    const fetchBlogs = async (page: number) => {
+      const response = await fetch(`/api/blogs/paginated-blogs?page=${page}&limit=${limit}`);
+      const data: BlogApiResponse = await response.json();
+      setBlogs(data.blogs);
+      setTotalPages(data.totalPages);
+    };
+    fetchBlogs(page);
+  }, [page]);
+
+  const handleNextPage = () => {
+    if (page < totalPages) setPage(page + 1);
+  };
+
+  const handlePreviousPage = () => {
+    if (page > 1) setPage(page - 1);
+  };
 
   return (
     <div className="flex flex-col mx-auto max-w-5xl">
@@ -70,6 +107,26 @@ const Blogs = async () => {
                 </div>
               ))}
             </div>
+            
+            <div className="pagination mt-8 mb-8 flex justify-between items-center">
+              <Button
+                onClick={handlePreviousPage}
+                disabled={page === 1}
+                className="mr-2 px-3 py-1 bg-rose-600/90 w-20 hover:bg-rose-600/60 rounded"
+              >
+                Previous
+              </Button>
+              <span>
+                Page {page} of {totalPages}
+              </span>
+              <Button
+                onClick={handleNextPage}
+                disabled={page === totalPages}
+                className="ml-2 px-3 py-1 bg-rose-600/90 hover:bg-rose-600/60 w-20 rounded"
+              >
+                Next
+              </Button>
+            </div>
           </div>
           <div className="flex flex-col">
             <p>What&#39;s</p>
@@ -79,32 +136,32 @@ const Blogs = async () => {
             <p className="text-2xl font-bold">Categories</p>
             <div className="grid grid-cols-2 sm:grid-cols-3 mt-8 gap-4">
               <Link href="/category/style">
-                <Button className="flex items-center ustify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
+                <Button className="flex items-center justify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
                   Style
                 </Button>
               </Link>
               <Link href="/category/tech">
-                <Button className="flex items-center ustify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
+                <Button className="flex items-center justify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
                   Tech
                 </Button>
               </Link>
               <Link href="/category/fashion">
-                <Button className="flex items-center ustify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
+                <Button className="flex items-center justify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
                   Fashion
                 </Button>
               </Link>
               <Link href="/category/culture">
-                <Button className="flex items-center ustify-center w20 bg-blue-300/50 text-black hover:bg-blue-400/50">
+                <Button className="flex items-center justify-center w20 bg-blue-300/50 text-black hover:bg-blue-400/50">
                   Culture
                 </Button>
               </Link>
               <Link href="/category/travel">
-                <Button className="flex items-center ustify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
+                <Button className="flex items-center justify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
                   Travel
                 </Button>
               </Link>
               <Link href="/category/food">
-                <Button className="flex items-center ustify-center w- bg-blue-300/50 text-black hover:bg-blue-400/50">
+                <Button className="flex items-center justify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
                   Food
                 </Button>
               </Link>

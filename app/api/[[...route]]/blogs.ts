@@ -140,4 +140,25 @@ const app = new Hono()
       }
     }
   )
+
+  .get("/paginated-blogs", async (c) => {
+    const page = parseInt(c.req.query("page") || "1", 10);
+    const limit = parseInt(c.req.query("limit") || "3", 10);
+    const skip = (page - 1) * limit;
+  
+    const blogs = await prisma.blog.findMany({
+      skip,
+      take: limit,
+      include: { author: true },
+    });
+  
+    const totalBlogs = await prisma.blog.count();
+    const totalPages = Math.ceil(totalBlogs / limit);
+  
+    return c.json({
+      blogs,
+      currentPage: page,
+      totalPages,
+    });
+  });
 export default app;
