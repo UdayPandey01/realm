@@ -92,17 +92,18 @@ const Blogs: React.FC = () => {
                   key={blog.id}
                   className="flex flex-row justify-start gap-4"
                 >
-                  <Image src={thread} alt="thread" width={300} height={300} />
+                  {/* <Image src={thread} alt="thread" width={300} height={300} /> */}
                   <div className="flex flex-col">
                     <p>
                       {format(new Date(blog.createdAt), "dd MMMM, yyyy")} -{" "}
-                      <span className="text-rose-600">{blog.category}</span>
+                      <span className="text-rose-600">{blog.category.charAt(0).toUpperCase() + blog.category.slice(1).toLowerCase()}</span>
                     </p>
-                    <p className="font-semibold mt-4">{blog.title}</p>
+                    <p className="font-semibold text-lg mt-4">{blog.title}</p>
                     <p className="mt-6">{blog.content.slice(0, 100)}...</p>
                     <Link href={`/blog/${blog.id}`}>
                       <p className="font-semibold underline mt-4">Read More</p>
                     </Link>
+                  <div>_______________________________________________________________________________</div>
                   </div>
                 </div>
               ))}

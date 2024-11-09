@@ -125,18 +125,17 @@ const app = new Hono()
   .get("/three-blogs", 
     async(c) => {
       try {
-        // Fetch the first three blogs along with the author data
         const blogs = await prisma.blog.findMany({
           take: 3,
           include: {
-            author: true, // Assuming you have an 'author' relation set up in Prisma
+            author: true,
           },
         });
         
         return c.json({ blogs });
       } catch (error) {
         console.error("Error fetching blogs:", error);
-        return c.json({ message: "Error fetching blogs" }, 500); // Handle error with a proper message
+        return c.json({ message: "Error fetching blogs" }, 500);
       }
     }
   )
