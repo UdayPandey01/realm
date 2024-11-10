@@ -66,9 +66,6 @@ const Navbar = () => {
         <Link href="/new-story">
           <p>Write</p>
         </Link>
-        <Link href="/contact">
-          <p>Contact</p>
-        </Link>
         <Link href="/about">
           <p>About</p>
         </Link>
