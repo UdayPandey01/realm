@@ -2,8 +2,10 @@
 
 import { FormEvent, useState } from "react";
 import axios from "axios"
+import { useRouter } from "next/navigation";
 
 const SignUpForm = () => {
+  const router = useRouter()
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,6 +34,7 @@ const SignUpForm = () => {
         setEmail('')
         setPassword('')
 
+        router.push('/')
 
         console.log(response.data)
     }catch(error){
@@ -90,14 +93,14 @@ const SignUpForm = () => {
             type="submit"
             className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md"
           >
-            Sign In
+            Sign Up
           </button>
         </form>
-        <div className="text-center mt-4">
+        {/* <div className="text-center mt-4">
           <p className="text-sm text-gray-500">
             Already have an account? <a href="/login/sign-in" className="text-blue-500 hover:underline">Sign in</a>
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

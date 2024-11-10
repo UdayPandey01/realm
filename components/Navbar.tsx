@@ -1,11 +1,29 @@
+"use client"
+
 import instagram from "@/assets/instagram.png";
 import facebook from "@/assets/facebook.png";
 import twitter from "@/assets/twitter.png";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/logo2.png";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter()
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken")
+    setIsLoggedIn(false)
+    router.push('/')
+  }
+
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between mx-auto max-w-5xl py-5 px-4">
       <div className="hidden sm:flex flex-row gap-4">
@@ -44,7 +62,6 @@ const Navbar = () => {
         </Link>
       </div>
 
-      {/* Navigation Links */}
       <div className="flex flex-row gap-4 font-medium text-center">
         <Link href="/new-story">
           <p>Write</p>
@@ -55,9 +72,13 @@ const Navbar = () => {
         <Link href="/about">
           <p>About</p>
         </Link>
-        <Link href="/login/sign-up">
+        {isLoggedIn ? (
+          <p onClick={handleLogout} className="cursor-pointer text-rose-500">Logout</p>
+        ) :(
+          <Link href="/login/sign-up">
           <p>Login</p>
         </Link>
+        )}
       </div>
     </div>
   );
