@@ -12,11 +12,11 @@ import { format } from "date-fns";
 interface BlogData {
   title: string;
   content: string;
-  blog : {
-    title : string,
-    content : string
-    createdAt : Date
-  }
+  blog: {
+    title: string;
+    content: string;
+    createdAt: Date;
+  };
 }
 
 const Page = ({ params }: { params: Promise<{ id: string }> }) => {
@@ -26,9 +26,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `/api/blogs/get-blog/${id}`
-        );
+        const response = await fetch(`/api/blogs/get-blog/${id}`);
         const result = await response.json();
         setData(result);
         console.log(result);
@@ -44,18 +42,20 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
     <div>
       <Navbar />
       {data && (
-        <div className="flex flex-col mx-auto max-w-5xl mt-10">
-          <div className="grid grid-cols-2">
-            <div className="h-[340px] flex flex-col justify-between">
-              <p className="text-5xl font-semibold mr-6 overflow-hidden text-ellipsis">
+        <div className="flex flex-col mx-auto max-w-5xl mt-10 px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex flex-col justify-between">
+              <p className="text-3xl md:text-5xl font-semibold mr-6 overflow-hidden text-ellipsis">
                 {data.blog.title}
               </p>
               <div>
                 <p className="text-lg font-semibold">Uday Pandey</p>
-                <p className="text-xs font-medium">{format(new Date(data.blog.createdAt), "dd MMM, yyyy")}</p>
+                <p className="text-xs font-medium">
+                  {format(new Date(data.blog.createdAt), "dd MMM, yyyy")}
+                </p>
               </div>
             </div>
-            <div>
+            <div className="flex justify-center md:justify-end">
               <Image
                 src={thread}
                 alt="thread"
@@ -65,40 +65,36 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
               />
             </div>
           </div>
-          <div className="grid grid-cols-3 mt-8">
-            <div className="col-span-2">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+            <div className="lg:col-span-2">
               <p className="mr-8">{data.blog.content}</p>
               <div className="mt-10">
                 <Comments blogId={id} />
               </div>
             </div>
-            <div>
+            <div className="space-y-8">
               <Blog />
-              <p className="mt-14">Discover by topics</p>
-              <p className="text-2xl font-bold">Categories</p>
-              <div className="grid grid-cols-3 mt-8 gap-4 ">
-                <Button className="flex items-center justify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
-                  Style
-                </Button>
-                <Button className="flex items-center justify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
-                  Fashion
-                </Button>
-                <Button className="flex items-center justify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
-                  Food
-                </Button>
-                <Button className="flex items-center justify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
-                  Travel
-                </Button>
-                <Button className="flex items-center justify-center w-20 bg-blue-300/50 text-black hover:bg-blue-400/50">
-                  Culture
-                </Button>
-                <Button className="flex items-center justify-center w-20 bg-violet-300/50 text-black hover:bg-violet-400/50">
-                  Tech
-                </Button>
+              <div>
+                <p className="mt-6 text-xl font-bold">Discover by topics</p>
+                <p className="text-2xl font-bold mt-1">Categories</p>
+                <div className="grid grid-cols-3 gap-4 mt-4">
+                  {["Style", "Fashion", "Food", "Travel", "Culture", "Tech"].map(
+                    (category) => (
+                      <Button
+                        key={category}
+                        className="flex items-center justify-center w-full bg-blue-300/50 text-black hover:bg-blue-400/50"
+                      >
+                        {category}
+                      </Button>
+                    )
+                  )}
+                </div>
               </div>
-              <p className="mt-14">Choosen by the editor</p>
-              <p className="text-2xl font-bold">Editors Pick</p>
-              <Blog />
+              <div>
+                <p className="mt-6 text-xl font-bold">Chosen by the editor</p>
+                <p className="text-2xl font-bold mt-1">Editors Pick</p>
+                <Blog />
+              </div>
             </div>
           </div>
         </div>
