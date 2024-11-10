@@ -1,5 +1,6 @@
 "use client";
 
+import Navbar from "@/components/Navbar";
 import React, { use, useEffect, useState } from "react";
 
 interface Blog {
@@ -30,6 +31,8 @@ const CategoryPage = ({ params }: { params: Promise<{ category: string }> }) => 
   };
 
   return (
+    <div>
+      <Navbar/>
     <div className="mt-8">
       <h1 className="text-3xl font-semibold">Category: {category}</h1>
 
@@ -41,6 +44,7 @@ const CategoryPage = ({ params }: { params: Promise<{ category: string }> }) => 
           </li>
         ))}
       </ul>
+    </div>
     </div>
   );
 };
