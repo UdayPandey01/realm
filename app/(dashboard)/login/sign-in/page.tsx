@@ -10,7 +10,7 @@ const SignInForm = () => {
   const handleSubmit = async(e : FormEvent) => {
     e.preventDefault();
 
-    const response = await axios.post("http://localhost:3000/api/authors/sign-in", {
+    const response = await axios.post("/api/authors/sign-in", {
       data : {
         email,
         password

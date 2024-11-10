@@ -12,7 +12,7 @@ const SignUpForm = () => {
     e.preventDefault();
 
     try{
-        const response = await axios.post("http://localhost:3000/api/authors/sign-up", {
+        const response = await axios.post("/api/authors/sign-up", {
           data : {
             name, 
             email,

@@ -22,7 +22,7 @@ const CreateBlog = () => {
 
     console.log("Token", token);
     const response = await axios.post(
-      "http://localhost:3000/api/blogs/publish-blog",
+      "/api/blogs/publish-blog",
       {
         data :{title,
         content,

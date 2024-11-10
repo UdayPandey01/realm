@@ -27,7 +27,7 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/blogs/get-blog/${id}`
+          `/api/blogs/get-blog/${id}`
         );
         const result = await response.json();
         setData(result);

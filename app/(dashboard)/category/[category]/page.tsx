@@ -21,7 +21,7 @@ const CategoryPage = ({ params }: { params: Promise<{ category: string }> }) => 
   const fetchBlogs = async (category: string) => {
     try {
       console.log("category", category)
-      const response = await fetch(`http://localhost:3000/api/blogs/cat-blog/${category}`);
+      const response = await fetch(`/api/blogs/cat-blog/${category}`);
       const data = await response.json();
       setBlogs(data.blog || []);
     } catch (error) {
