@@ -95,7 +95,7 @@ const Comments = ({ blogId }: { blogId: string }) => {
         </div>
       ) : (
         <p className="Text-xl font-medium">
-          <Link href="/login/sign-in">
+          <Link href="/login/sign-up">
           Sign-In to Comment
           </Link>
 
