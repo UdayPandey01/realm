@@ -43,6 +43,7 @@ const MyComponent = () => {
   const handleDeleteBlog = async(id : string) =>{
     try {
         const response = await axios.delete(`http://localhost:3000/api/blogs/del-author-blog/${id}`)
+        console.log(response)
         await fetchUsers()
       } catch{
         console.log('Error deleting blog:');

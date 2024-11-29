@@ -27,7 +27,7 @@ const Comments = ({ blogId }: { blogId: string }) => {
     };
 
     fetchComments();
-  }, [blogId]);
+  }, [blogId, token]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);

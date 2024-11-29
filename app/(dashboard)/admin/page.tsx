@@ -1,13 +1,12 @@
 'use client'; // Client-side rendering is required for localStorage
 
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import Navbar from '@/components/Navbar';
 import AllAuthors from '@/components/AllAuthors';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 const Page = () => {
-  const [user, setUser] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -39,7 +38,6 @@ const Page = () => {
   
   
   return (
-    // {user === 'Admin' ? ()}
     <div>
       <Navbar />
       <div className="flex justify-center items-center text-3xl font-bold">

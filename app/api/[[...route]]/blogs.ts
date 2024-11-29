@@ -1,5 +1,4 @@
 import prisma from "@/lib/db";
-import { log } from "console";
 import { Hono } from "hono";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
@@ -178,8 +177,8 @@ const app = new Hono()
         where: { id },
       });
       return c.json({ DeletedBlog: deletedBlog });
-    } catch (error: any) {
-      console.error('Error deleting blog:', error.stack); 
+    } catch (error) {
+      console.error('Error deleting blog:', error); 
     }
   });
 export default app;
