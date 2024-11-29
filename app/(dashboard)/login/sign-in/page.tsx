@@ -2,21 +2,31 @@
 
 import { FormEvent, useState } from "react";
 import axios from "axios"
+import { useRouter } from "next/navigation";
 
 const SignInForm = () => {
+  const router = useRouter()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = async(e : FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
-    const response = await axios.post("/api/authors/sign-in", {
-      data : {
-        email,
-        password
+  
+    try {
+      const response = await axios.post("/api/authors/sign-in", {
+        data: {
+          email,
+          password
+        }
+      });
+      if (response.status === 200) {
+        localStorage.setItem('authToken', response.data.token);
+        router.push('/');
       }
-    })
-    console.log(response.data)
+    } catch (error) {
+      console.error('Error during sign-in:', error);
+      alert('An error occurred. Please try again.');
+    }
   };
 
   return (

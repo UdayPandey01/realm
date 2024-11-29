@@ -29,7 +29,6 @@ const Page = ({ params }: { params: Promise<{ id: string }> }) => {
         const response = await fetch(`/api/blogs/get-blog/${id}`);
         const result = await response.json();
         setData(result);
-        console.log(result);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

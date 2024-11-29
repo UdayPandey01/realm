@@ -8,14 +8,28 @@ import Link from "next/link";
 import logo from "@/assets/logo2.png";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import {jwtDecode, JwtPayload} from 'jwt-decode'
+
+interface CustomJwtPayload extends JwtPayload {
+  role?: string;
+}
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
     const token = localStorage.getItem('authToken');
-    setIsLoggedIn(!!token);
+    if(token){
+      setIsLoggedIn(!!token);
+      try {
+        const decodedToken = jwtDecode<CustomJwtPayload>(token)
+        setIsAdmin(decodedToken.role === 'Admin')
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }, []);
 
   const handleLogout = () => {
@@ -69,10 +83,15 @@ const Navbar = () => {
         <Link href="/about">
           <p>About</p>
         </Link>
+        {isAdmin ? (
+        <Link href='/admin'>
+          Admin Dashboard
+        </Link>
+        ):null}
         {isLoggedIn ? (
           <p onClick={handleLogout} className="cursor-pointer text-rose-500">Logout</p>
         ) :(
-          <Link href="/login/sign-up">
+          <Link href="/login/sign-in">
           <p>Login</p>
         </Link>
         )}

@@ -1,20 +1,17 @@
 import prisma from "@/lib/db";
+import { log } from "console";
 import { Hono } from "hono";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 const app = new Hono()
   .post("/publish-blog", async (c) => {
-
-    console.log("first")
     const authHeader = c.req.header("Authorization");
 
-    console.log("authHeader",authHeader)
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return c.json({ message: "No token provided" }, 401);
     }
 
     const token = authHeader.split(" ")[1];
-    console.log(token)
 
     try {
       const decoded = jwt.verify(
@@ -23,10 +20,8 @@ const app = new Hono()
       ) as JwtPayload & { authorId: string };
 
       const authorId = decoded.userId;
-      console.log(authorId)
 
       const body = await c.req.json();
-      console.log(body);
 
       const {
         title,
@@ -97,7 +92,6 @@ const app = new Hono()
   })
 
   .get("/cat-blog/:cat", async (c) => {
-    console.log("first")
     const  category  = c.req.param("cat");
     try {
       const blog = await prisma.blog.findMany({
@@ -159,5 +153,33 @@ const app = new Hono()
       currentPage: page,
       totalPages,
     });
+  })
+  .delete('/del-author-blog/:id', async (c) => {
+    try {
+      const {id} = await c.req.param()
+      if (!id) {
+        return c.json({ error: 'Blog ID is required' }, 400); 
+      }
+
+      const blogExists = await prisma.blog.findUnique({
+        where: { id },
+      });
+
+      if (!blogExists) {
+        console.error('Blog not found with ID:', id);
+        return c.json({ error: `Blog with ID ${id} not found` }, 404);
+      }
+
+      await prisma.comment.deleteMany({
+        where: { blogId: id },
+      });
+
+      const deletedBlog = await prisma.blog.delete({
+        where: { id },
+      });
+      return c.json({ DeletedBlog: deletedBlog });
+    } catch (error: any) {
+      console.error('Error deleting blog:', error.stack); 
+    }
   });
 export default app;

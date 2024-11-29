@@ -9,6 +9,7 @@ const SignUpForm = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('User')
 
   const handleSubmit = async(e : FormEvent) => {
     e.preventDefault();
@@ -18,14 +19,13 @@ const SignUpForm = () => {
           data : {
             name, 
             email,
-            password
+            password,
+            role
           }
         })
 
         if (response.status === 200) {
           localStorage.setItem('authToken', response.data.token);
-    
-          console.log("Sign-up successful!");
         } else {
           console.log(response.data.error || response.data.message);
         }
@@ -33,10 +33,9 @@ const SignUpForm = () => {
         setName('')
         setEmail('')
         setPassword('')
+        setRole('User')
 
         router.push('/')
-
-        console.log(response.data)
     }catch(error){
         console.error(error)
     }
@@ -96,11 +95,11 @@ const SignUpForm = () => {
             Sign Up
           </button>
         </form>
-        {/* <div className="text-center mt-4">
+        <div className="text-center mt-4">
           <p className="text-sm text-gray-500">
             Already have an account? <a href="/login/sign-in" className="text-blue-500 hover:underline">Sign in</a>
           </p>
-        </div> */}
+        </div>
       </div>
     </div>
   );

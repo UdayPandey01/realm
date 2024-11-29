@@ -19,8 +19,6 @@ const CreateBlog = () => {
     e.preventDefault();
 
     const token = localStorage.getItem("authToken");
-
-    console.log("Token", token);
     const response = await axios.post(
       "/api/blogs/publish-blog",
       {
@@ -39,7 +37,6 @@ const CreateBlog = () => {
       router.push("/")
     }
 
-    console.log(response.data);
   };
 
   return (
